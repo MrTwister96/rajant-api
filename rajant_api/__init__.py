@@ -206,7 +206,10 @@ class Breadcrumb:
         Returns:
         Message_pb2.BCMessage.State or bool: The state from the host if successful, False otherwise.
         """
-        if self.reachable() and self.authenticated:
+        if self.reachable():
+            if not self.authenticated:
+                self.authenticate()
+
             try:
                 request_state_message = self.build_message()
                 request_state_message.state.Clear()
@@ -239,7 +242,10 @@ class Breadcrumb:
         Raises:
         Exception: If any error occurs during the process, it will be raised.
         """
-        if self.reachable() and self.authenticated:
+        if self.reachable():
+            if not self.authenticated:
+                self.authenticate()
+
             try:
                 request_state_message = self.build_message()
                 request_state_message.state.Clear()
@@ -255,5 +261,3 @@ class Breadcrumb:
 
 if __name__ == '__main__':
     pass
-
-
