@@ -11,7 +11,7 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-import Config_pb2 as Config__pb2
+from . import Config_pb2 as Config__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cSystem.proto\x1a\x0c\x43onfig.proto\"\xca\x01\n\x13SystemConfiguration\x12\x1e\n\rconfiguration\x18\x01 \x01(\x0b\x32\x07.Config\x12\x14\n\x0cpublicSSLKey\x18\x02 \x01(\x0c\x12\x15\n\rprivateSSLKey\x18\x03 \x01(\x0c\x12-\n\x07sshKeys\x18\x04 \x01(\x0b\x32\x1c.SystemConfiguration.SshKeys\x1a\x37\n\x07SshKeys\x12\x12\n\nauthorized\x18\x01 \x01(\x0c\x12\x0b\n\x03\x64ss\x18\x02 \x01(\x0c\x12\x0b\n\x03rsa\x18\x03 \x01(\x0c\x42\x32\n\x17\x63om.rajant.bcapi.protosB\x0cSystemProtosH\x02Z\x07\x62\x63proto')

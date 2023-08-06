@@ -11,7 +11,7 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-import Common_pb2 as Common__pb2
+from . import Common_pb2 as Common__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tLog.proto\x1a\x0c\x43ommon.proto\"\x98\x01\n\x08\x42\x43Logger\x12\x1b\n\x04logs\x18\x01 \x03(\x0b\x32\r.BCLogger.Log\x1a=\n\x06LEDLog\x12\x0c\n\x04\x63ode\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x14\n\x0c\x65xtraMessage\x18\x03 \x01(\t\x1a\x30\n\x03Log\x12\r\n\x05index\x18\x01 \x01(\x04\x12\x1a\n\x06\x61\x63tion\x18\x02 \x01(\x0e\x32\n.BCRActionB/\n\x17\x63om.rajant.bcapi.protosB\tLogProtosH\x02Z\x07\x62\x63proto')

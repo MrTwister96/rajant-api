@@ -11,8 +11,8 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-import ModelDatabase_pb2 as ModelDatabase__pb2
-import Rule_pb2 as Rule__pb2
+from . import ModelDatabase_pb2 as ModelDatabase__pb2
+from . import Rule_pb2 as Rule__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x42\x61\x63kup.proto\x12\x0frajant.bc.proto\x1a\x13ModelDatabase.proto\x1a\nRule.proto\"\xa9\x01\n\x06\x42\x61\x63kup\x12\x0e\n\x06serial\x18\x01 \x01(\t\x12#\n\x08platform\x18\x02 \x01(\x0e\x32\x11.BcModel.Platform\x12\x0f\n\x07version\x18\x03 \x01(\t\x12\r\n\x05\x62uild\x18\x04 \x01(\t\x12\r\n\x05model\x18\x07 \x01(\t\x12\x0c\n\x04name\x18\x08 \x01(\t\x12\x0f\n\x07\x63omment\x18\t \x01(\t\x12\x0e\n\x06\x66ormat\x18\x05 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x06 \x01(\x0c\"|\n\rBackupRequest\x12\'\n\x06\x62\x61\x63kup\x18\x01 \x01(\x0b\x32\x17.rajant.bc.proto.Backup\x12\x12\n\npassphrase\x18\x02 \x01(\t\x12.\n\x05scope\x18\x03 \x01(\x0e\x32\x1f.rajant.bc.proto.Rule.SyncScopeB2\n\x17\x63om.rajant.bcapi.protosB\x0c\x42\x61\x63kupProtosH\x02Z\x07\x62\x63proto')

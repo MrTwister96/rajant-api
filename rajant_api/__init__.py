@@ -1,4 +1,4 @@
-import Message_pb2
+from . import Message_pb2
 from socket import socket, AF_INET
 from ssl import wrap_socket
 from struct import pack, unpack
