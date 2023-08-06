@@ -9,8 +9,8 @@ setup(
         "grpcio-tools==1.56.2",
         "protobuf==4.23.4"
     ],
-    url='https://github.com/yourusername/mylibrary',
-    license='CC BY-NC 4.0',
+    url='https://github.com/MrTwister96/rajant-api',
+    license='License :: Free For Educational Use',
     author='Schalk Olivier',
     author_email='olivierschalk1@gmail.com',
     description='Library for communicating with Rajant Breadcrumb devices using the BCAPI implemented in Python3',
@@ -19,7 +19,7 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: CC BY-NC 4.0',
+        'License :: Free For Educational Use',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
