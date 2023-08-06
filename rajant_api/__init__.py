@@ -1,154 +1,8 @@
-from . import Message_pb2
+from rajant_api import Message_pb2
+from rajant_api.helper_functions import is_valid_ipv4, pack_data, unpack_data, get_gps, is_host_reachable
 from socket import socket, AF_INET
 from ssl import wrap_socket
-from struct import pack, unpack
-from zlib import decompress, compress
 import hashlib
-import platform
-import subprocess
-
-
-def unpack_data(packet):
-    """
-    Unpack the data from a binary packet, possibly decompressing if gzip-compressed.
-
-    Args:
-        packet (bytes): The binary packet containing the header and data.
-
-    Returns:
-        bytes: The unpacked data.
-
-    The unpack_data function extracts the data from a binary packet. The packet is expected
-    to have a header containing the length of the data and a flag indicating whether gzip
-    compression was used. The function first unpacks the header to retrieve the data length
-    and the compression flag. If the compression flag is set to 2, indicating gzip compression,
-    the data is decompressed using gzip.
-
-    Parameters:
-        packet (bytes): The binary packet containing the header and data.
-
-    Returns:
-        bytes: The unpacked data.
-
-    Example:
-        received_packet = b'\x00\x00\x00\x1c\x00\x00\x00\x02This is compressed data...'
-        data = unpack_data(received_packet)
-        # The extracted data can be further processed and used as needed.
-    """
-    header = unpack('>ibbbb', packet[:8])
-    data = packet[8:]
-    if header[1] == 2:
-        data = decompress(data, -15)
-    return data
-
-
-def pack_data(data, gzip=False):
-    """
-    Pack the given data into a binary packet with an optional gzip compression.
-
-    Args:
-        data (bytes): The raw data to be included in the packet.
-        gzip (bool, optional): If True, the data will be compressed using gzip compression.
-                               Defaults to False.
-
-    Returns:
-        bytes: The binary packet containing the header and (optionally compressed) data.
-
-    The pack_data function constructs a binary packet with the provided data and an optional
-    gzip compression. The data is first optionally compressed using gzip, and then a header is
-    built for the packet. The header includes the length of the data and a flag indicating
-    whether gzip compression is used.
-
-    Parameters:
-        - data (bytes): The raw data to be included in the packet.
-        - gzip (bool, optional): If True, the data will be compressed using gzip compression.
-                                 Defaults to False.
-
-    Returns:
-        bytes: The binary packet containing the header and (optionally compressed) data.
-
-    Example:
-        raw_data = b'This is the raw data that needs to be packed.'
-        packet = pack_data(raw_data, gzip=True)
-        # The resulting packet can be transmitted or stored as needed.
-    """
-    if gzip:
-        data = compress(data, wbits=-15)
-    header = pack('>ibbbb', len(data), 2 if gzip else 0, 0, 0, 0)
-    packet = header + data
-    return packet
-
-
-def get_gps(state):
-    """
-    Extracts and processes GPS data from the provided state object.
-
-    This function reads the state object, which is assumed to have a specific structure.
-    It then calculates latitude and longitude in degrees from the state object's raw GPS data,
-    which is assumed to be given in degrees and minutes.
-
-    If the GPS switch is not enabled in the state object, the function will return 0 for both latitude and longitude.
-
-    Parameters:
-    state (object): An object that contains GPS data. The structure of this object is assumed to be as follows:
-                    - state.gps.gpsSwitch.enabled: A boolean indicating if the GPS is enabled.
-                    - state.gps.gpsPos.gpsLat: A string representing the latitude data in degrees and minutes.
-                    - state.gps.gpsPos.gpsLong: A string representing the longitude data in degrees and minutes.
-
-    Returns:
-    dict: A dictionary with the following keys:
-          - 'enabled': A boolean indicating whether the GPS was enabled.
-          - 'latitude': The latitude in degrees. It's negative, as values are assumed to be in the southern hemisphere.
-          - 'longitude': The longitude in degrees.
-    """
-    if state.gps.gpsSwitch.enabled:
-        # get degrees
-        lat_deg = float(state.gps.gpsPos.gpsLat[0:2])
-        lon_deg = float(state.gps.gpsPos.gpsLong[0:3])
-        # get minutes
-        lat_min = float(state.gps.gpsPos.gpsLat[2:9])
-        lon_min = float(state.gps.gpsPos.gpsLong[3:10])
-        # create dictionary to return
-        return {
-            'enabled': True,
-            'latitude': -1 * (lat_deg + (lat_min / 60)),
-            'longitude': lon_deg + (lon_min / 60)
-        }
-    else:
-        return {
-            'enabled': False,
-            'latitude': 0,
-            'longitude': 0
-        }
-
-
-def is_host_reachable(host):
-    """
-   Checks if a host is reachable by sending a single ICMP echo request ("ping") to the host.
-
-   This function constructs the appropriate ping command depending on the operating system
-   (either Windows or a UNIX-like system such as Linux or MacOS), then attempts to execute the command.
-   The host is considered reachable if the return code of the ping command is 0 (which means the command
-   was successful).
-
-   Parameters:
-   host (str): The hostname or IP address of the target host.
-
-   Returns:
-   bool: True if the host is reachable (the ping command was successful), False otherwise.
-   """
-    # Determine the appropriate ping command based on the operating system.
-    if platform.system().lower() == "windows":
-        cmd = ["ping", "-n", "1", host]
-    else:
-        cmd = ["ping", "-c", "1", host]
-
-    try:
-        # Run the ping command and check the return code.
-        subprocess.check_output(cmd, stderr=subprocess.STDOUT, universal_newlines=True)
-        return True  # If the return code is 0, the host is reachable.
-    except subprocess.CalledProcessError:
-        return False  # If the return code is non-zero, the host is not reachable.
 
 
 class Breadcrumb:
@@ -397,3 +251,9 @@ class Breadcrumb:
                 raise e
         else:
             return False
+
+
+if __name__ == '__main__':
+    pass
+
+
